@@ -1,0 +1,14 @@
+C:\Users\i45416\source\repos\testconsole\testconsole\bin\Debug\net8.0\testconsole.exe
+C:\Users\i45416\source\repos\testconsole\testconsole\bin\Debug\net8.0\testconsole.deps.json
+C:\Users\i45416\source\repos\testconsole\testconsole\bin\Debug\net8.0\testconsole.runtimeconfig.json
+C:\Users\i45416\source\repos\testconsole\testconsole\bin\Debug\net8.0\testconsole.dll
+C:\Users\i45416\source\repos\testconsole\testconsole\bin\Debug\net8.0\testconsole.pdb
+C:\Users\i45416\source\repos\testconsole\testconsole\obj\Debug\net8.0\testconsole.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\i45416\source\repos\testconsole\testconsole\obj\Debug\net8.0\testconsole.AssemblyInfoInputs.cache
+C:\Users\i45416\source\repos\testconsole\testconsole\obj\Debug\net8.0\testconsole.AssemblyInfo.cs
+C:\Users\i45416\source\repos\testconsole\testconsole\obj\Debug\net8.0\testconsole.csproj.CoreCompileInputs.cache
+C:\Users\i45416\source\repos\testconsole\testconsole\obj\Debug\net8.0\testconsole.dll
+C:\Users\i45416\source\repos\testconsole\testconsole\obj\Debug\net8.0\refint\testconsole.dll
+C:\Users\i45416\source\repos\testconsole\testconsole\obj\Debug\net8.0\testconsole.pdb
+C:\Users\i45416\source\repos\testconsole\testconsole\obj\Debug\net8.0\testconsole.genruntimeconfig.cache
+C:\Users\i45416\source\repos\testconsole\testconsole\obj\Debug\net8.0\ref\testconsole.dll
