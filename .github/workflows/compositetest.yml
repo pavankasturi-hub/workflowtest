@@ -50,8 +50,7 @@ jobs:
         run: echo "Hello ${{ inputs.who-to-greet }}."
         shell: bash
         env:
-          who-to-greet: ${{ inputs.who-to-greet }}
-          
+          who-to-greet: ${{ inputs.who-to-greet }}                    
       - name: Random Number Generator
         id: random-number-generator
         run: echo "random-number=$(echo $RANDOM)" >> $GITHUB_ENV
