@@ -9,7 +9,7 @@
 # the `language` matrix defined below to confirm you have the correct set of
 # supported CodeQL languages.
 #
-name: "Build Test"
+name: "Build & Security"
 
 on:
   workflow_dispatch:
@@ -18,7 +18,7 @@ on:
       - main
       - master
 jobs:
-  analyze:
+  Build:
     name: Analyze
     # Runner size impacts CodeQL analysis time. To learn more, please see:
     #   - https://gh.io/recommended-hardware-resources-for-running-codeql
