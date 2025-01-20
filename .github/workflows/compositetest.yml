@@ -1,35 +1,97 @@
-name: 'Hello World'
-description: 'Greet someone'
-inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
-    required: true
-    default: 'World'
-outputs:
-  random-number:
-    description: "Random number"
-    value: ${{ steps.random-number-generator.outputs.random-number }}
-runs:
-  using: "composite"
-  steps:
-    - name: Set Greeting
-      run: echo "Hello $INPUT_WHO_TO_GREET."
-      shell: bash
-      env:
-        INPUT_WHO_TO_GREET: ${{ inputs.who-to-greet }}
+# For most projects, this workflow file will not need changing; you simply need
+# to commit it to your repository.
+#
+# You may wish to alter this file to override the set of languages analyzed,
+# or to provide custom queries or build logic.
+#
+# ******** NOTE ********
+# We have attempted to detect the languages in your repository. Please check
+# the `language` matrix defined below to confirm you have the correct set of
+# supported CodeQL languages.
+#
+name: "Build & Security"
 
-    - name: Random Number Generator
-      id: random-number-generator
-      run: echo "random-number=$(echo $RANDOM)" >> $GITHUB_OUTPUT
-      shell: bash
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - master
+jobs:
+  Build:
+    name: Analyze
+    # Runner size impacts CodeQL analysis time. To learn more, please see:
+    #   - https://gh.io/recommended-hardware-resources-for-running-codeql
+    #   - https://gh.io/supported-runners-and-hardware-resources
+    #   - https://gh.io/using-larger-runners
+    # Consider using larger runners for possible analysis time improvements.
+    runs-on: 'ubuntu-latest'
+    timeout-minutes: 120
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+      packages: read
+      id-token: write
+      checks: write
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'csharp', 'javascript' ]
 
-    - name: Set GitHub Path
-      run: echo "$GITHUB_ACTION_PATH" >> $GITHUB_PATH
-      shell: bash
-      env:
-        GITHUB_ACTION_PATH: ${{ github.action_path }}
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-    - name: Run goodbye.sh
-      run: goodbye.sh
-      shell: bash
+    # Initializes the CodeQL tools for scanning.
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v2
+      with:
+        languages: ${{ matrix.language }}
+
+    - name: Build the Code
+      run: dotnet build    # replace this with your build command
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v2
+      with:
+        category: "/language:${{matrix.language}}"
+    
+    - name: Download a Build Artifact
+      uses: actions/download-artifact@v4.1.8
+    
+    - name: 'World'      
+      inputs:
+        who-to-greet:  # id of input
+          description: 'Who to greet'
+          required: true
+          default: 'World'
+      outputs:
+        random-number:
+          description: "Random number"
+          value: ${{ steps.random-number-generator.outputs.random-number }}
+    runs:
+      using: "composite"
+      steps:
+        - name: Set Greeting
+          run: echo "Hello $INPUT_WHO_TO_GREET."
+          shell: bash
+          env:
+            INPUT_WHO_TO_GREET: ${{ inputs.who-to-greet }}
+
+        - name: Random Number Generator
+          id: random-number-generator
+          run: echo "random-number=$(echo $RANDOM)" >> $GITHUB_OUTPUT
+          shell: bash
+
+        - name: Set GitHub Path
+          run: echo "$GITHUB_ACTION_PATH" >> $GITHUB_PATH
+          shell: bash
+          env:
+            GITHUB_ACTION_PATH: ${{ github.action_path }}
+    
+        - name: Run goodbye.sh
+          run: goodbye.sh
+          shell: bash
+
 
