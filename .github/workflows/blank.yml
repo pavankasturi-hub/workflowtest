@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 name: Test Code Scanning
 
 on:
@@ -6,29 +7,100 @@ on:
   pull_request:
      branches: [ master ]
 
+=======
+# For most projects, this workflow file will not need changing; you simply need
+# to commit it to your repository.
+#
+# You may wish to alter this file to override the set of languages analyzed,
+# or to provide custom queries or build logic.
+#
+# ******** NOTE ********
+# We have attempted to detect the languages in your repository. Please check
+# the `language` matrix defined below to confirm you have the correct set of
+# supported CodeQL languages.
+#
+name: "CodeQL"
+
+on:
+  workflow_dispatch:
+  
+>>>>>>> 8354006 (CodeQL updated.)
 jobs:
-  run-shell-command:
-    runs-on: ubuntu-latest
-    steps: 
-      - name: echo a string
-        run: echo "Hello World"
-        timeout-minutes: 0
-      - name: multiline script 
-        run: |
-           node -v 
-           npm -v
-      - name: python Command 
-        run: |
-          import platform 
-          print
-          (platform.processor())
-        shell: python
-  run-windwos-commands:
-    runs-on: windows-latest
-    needs: ["run-shell-command"]
+  analyze:
+    name: Analyze
+    # Runner size impacts CodeQL analysis time. To learn more, please see:
+    #   - https://gh.io/recommended-hardware-resources-for-running-codeql
+    #   - https://gh.io/supported-runners-and-hardware-resources
+    #   - https://gh.io/using-larger-runners
+    # Consider using larger runners for possible analysis time improvements.
+    runs-on: 'ubuntu-latest'
+    timeout-minutes: 120
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+      packages: read
+      id-token: write
+      checks: write
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'csharp', 'python', 'javascript' ]
+        # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python', 'ruby', 'swift' ]
+        # Use only 'java' to analyze code written in Java, Kotlin or both
+        # Use only 'javascript' to analyze code written in JavaScript, TypeScript or both
+        # Learn more about CodeQL language support at https://aka.ms/codeql-docs/language-support
+
     steps:
-      - name: Directory PowerShell
-        run: Get-Location 
-      - name: Directory Bash 
-        run: pwd 
-        shell: bash 
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # Initializes the CodeQL tools for scanning.
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v2
+      with:
+        languages: ${{ matrix.language }}
+        queries: security-and-quality,security-experimental,security-extended
+        debug: true
+        # If you wish to specify custom queries, you can do so here or in a config file.
+        # By default, queries listed here will override any specified in a config file.
+        # Prefix the list here with "+" to use these queries and those in the config file.
+
+        # For more details on CodeQL's query packs, refer to: https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
+        # queries: security-extended,security-and-quality
+
+
+    # Autobuild attempts to build any compiled languages (C/C++, C#, Go, Java, or Swift).
+    # If this step fails, then you should remove it and run the build manually (see below)
+    #- name: Autobuild
+    #  uses: github/codeql-action/autobuild@v2
+
+    # ℹ️ Command-line programs to run using the OS shell.
+    # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
+
+    #   If the Autobuild fails above, remove it and uncomment the following three lines.
+    #   modify them (or add more) to build your code if your project, please refer to the EXAMPLE below for guidance.
+
+    - name: Add dotnet nuget source
+      run: |
+        dotnet nuget add source --username USERNAME --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/ExtremeEventSolutions/index.json"
+        dotnet nuget list source
+
+    - name: Build TestApplication
+      run: |
+        echo "Build Test Console."
+        cd ./
+        echo "Running dotnet commands for Test Application."
+        dotnet restore
+        dotnet build testconsole.sln /p:Version="0.0.0" -c Release --no-incremental --nologo --runtime linux-x64 --no-self-contained     
+        echo "Software complete."
+    
+#    - name: Perform CodeQL Analysis
+#      uses: github/codeql-action/analyze@v2
+#      with:
+#        category: "/language:${{matrix.language}}"
+
+    - name: Perform CodeQL analysis
+      uses: github/codeql-action/analyze@v2
+      with:
+        database-path: "./codeql_databases"
