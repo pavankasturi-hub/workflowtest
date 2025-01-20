@@ -61,6 +61,11 @@ jobs:
         shell: bash
         env:
           GITHUB_ACTION_PATH: ${{ github.action_path }}
+          
+      - name: Upload CodeQL results for code scanning
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: ${{ github.workspace }}/codeql-results.sarif
 
       - name: Run goodbye.sh
         run: |
