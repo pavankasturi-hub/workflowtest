@@ -9,7 +9,7 @@
 # the `language` matrix defined below to confirm you have the correct set of
 # supported CodeQL languages.
 #
-name: "Build & Security"
+name: "BuildDotnet & CodeQL"
 
 on:
   workflow_dispatch:
@@ -17,6 +17,8 @@ on:
     branches:
       - main
       - master
+  pull_request:
+    branches: [ "master" ]
 jobs:
   Build:
     name: Analyze
