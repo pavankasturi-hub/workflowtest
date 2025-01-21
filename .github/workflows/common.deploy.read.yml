@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy-env:
-    uses: pavankasturi-hub/workflowtest/.github/workflows/common.deploy.read.yml@45199f3ac4c6c1ef70d9c536d0651ce32ecd8bbd
+    uses: ./.github/workflows/calledworkflow.yml
     permissions:
       actions: read
       contents: write
