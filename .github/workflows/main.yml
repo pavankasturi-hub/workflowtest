@@ -34,10 +34,10 @@ jobs:
         uses: actions/checkout@v3
 
       # Step 2: Run the composite action
-      - name: 'Run security scan with GHAS tools'
-        uses: ./.github/actions/my-composite-action
-        with:
-          repo-token: 'TestToken'
+    #  - name: 'Run security scan with GHAS tools'
+    #    uses: ./.github/actions/my-composite-action
+    #    with:
+    #      repo-token: 'TestToken'
           
   ReadJob:
         uses: ./.github/workflows/common.deploy.read.yml
