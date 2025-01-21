@@ -1,9 +1,15 @@
-name: LogReader deployment workflow
+name: Main Workflow
 
 on:
-  workflow_call:  
+  push:
+    branches:
+      - main
+
 jobs:
   deploy-env:
-    name: "Deploy LogReader"    
-    runs-on: ubuntu-latest    
-      
+    uses: pavankasturi-hub/workflowtest/.github/workflows/common.deploy.read.yml@45199f3ac4c6c1ef70d9c536d0651ce32ecd8bbd
+    permissions:
+      actions: read
+      contents: write
+      id-token: write
+
