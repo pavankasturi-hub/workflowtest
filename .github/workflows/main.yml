@@ -41,9 +41,4 @@ jobs:
           
   ReadJob:
         uses: ./.github/workflows/common.deploy.read.yml
-        with:
-            ReleaseTag: ${{inputs.ReleaseTag}}
-            environment: ${{inputs.environment}}
-            region: ${{inputs.region}}
-            toDeploy: ${{inputs.toDeploy}}
-        secrets: inherit
+       
