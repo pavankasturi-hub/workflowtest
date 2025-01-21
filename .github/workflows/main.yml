@@ -20,8 +20,7 @@ jobs:
     #  - name: 'Run security scan with GHAS tools'
     #    uses: ./.github/actions/my-composite-action
     #    with:
-    #      repo-token: 'TestToken'
-          
+    #      repo-token: 'TestToken'          
   ReadJob:
         uses: ./.github/workflows/common.deploy.read.yml
        
