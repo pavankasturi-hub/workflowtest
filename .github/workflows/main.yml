@@ -7,8 +7,24 @@ on:
   pull_request:
     branches:
       - main
-
-jobs:
+  workflow_call:
+        inputs:
+            ReleaseTag:
+                required: true
+                type: string
+            environment:
+                default: "dev"
+                required: false
+                type: string
+            region:
+                default: "us-east-1"
+                required: false
+                type: string
+            toDeploy: 
+                required: true
+                type: string 
+  
+jobs: 
   security:
     runs-on: ubuntu-latest
 
@@ -23,4 +39,11 @@ jobs:
         with:
           repo-token: 'TestToken'
           
-      #${{ secrets.GITHUB_TOKEN }}
+  ReadJob:
+        uses: ./.github/workflows/common.deploy.read.yml
+        with:
+            ReleaseTag: ${{inputs.ReleaseTag}}
+            environment: ${{inputs.environment}}
+            region: ${{inputs.region}}
+            toDeploy: ${{inputs.toDeploy}}
+        secrets: inherit
