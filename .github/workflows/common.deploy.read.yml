@@ -1,0 +1,39 @@
+name: LogReader deployment workflow
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        default: "dev"
+        required: false
+        type: string
+      ReleaseTag:
+        required: true
+        type: string
+      region:
+        default: "us-east-1"
+        required: false
+        type: string
+      toDeploy:
+        required: true
+        type: string
+      DispatchDistinctId:
+        description: "distinct id from deployment workflow"
+        type: string
+jobs:
+  deploy-env:
+    name: "Deploy LogReader"
+    if: inputs.toDeploy == 'true'
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    permissions:
+      id-token: write
+      contents: write
+      actions: read
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: "Checkout Source"
+        uses: actions/checkout@v4
+      
