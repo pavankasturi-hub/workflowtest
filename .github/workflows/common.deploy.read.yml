@@ -6,10 +6,6 @@ jobs:
   deploy-env:
     name: "Deploy LogReader"    
     runs-on: ubuntu-latest    
-    permissions:
-      id-token: write
-      contents: write
-      actions: read
     defaults:
       run:
         shell: bash
