@@ -21,4 +21,6 @@ jobs:
       - name: 'Run security scan with GHAS tools'
         uses: ./.github/actions/my-composite-action
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token: 'TestToken'
+          
+      #${{ secrets.GITHUB_TOKEN }}
