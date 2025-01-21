@@ -6,24 +6,7 @@ on:
       - main
   pull_request:
     branches:
-      - main
-  workflow_call:
-        inputs:
-            ReleaseTag:
-                required: true
-                type: string
-            environment:
-                default: "dev"
-                required: false
-                type: string
-            region:
-                default: "us-east-1"
-                required: false
-                type: string
-            toDeploy: 
-                required: true
-                type: string 
-  
+      - main  
 jobs: 
   security:
     runs-on: ubuntu-latest
