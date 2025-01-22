@@ -38,7 +38,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"myactionsdemo" /o:"devopselvis-sonar" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-          dotnet restore "${{ github.workspace }}\mywebapp\mywebapp.csproj"
-          dotnet build "${{ github.workspace }}\mywebapp\mywebapp.csproj" --configuration Release --no-restore
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"testconsole" /o:"devopselvis-sonar" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+          dotnet restore "${{ github.workspace }}\testconsole\testconsole.csproj"
+          dotnet build "${{ github.workspace }}\testconsole\testconsole.csproj" --configuration Release --no-restore
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
