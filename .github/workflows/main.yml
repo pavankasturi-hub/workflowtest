@@ -1,0 +1,12 @@
+name: Trigger Reusable Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  trigger-reusable-workflow:
+    uses: ./.github/workflows/reusable-workflow.yml
+    with:
+      environment: 'production'  # Override the default environment value
