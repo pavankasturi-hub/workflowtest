@@ -1,38 +1,23 @@
-name: 'My Composite Action for GHAS'
-
-description: 'A composite action that runs security scans using GHAS tools.'
-
+name: 'My Composite Action'
+description: 'This is a composite action that runs multiple steps'
 inputs:
-  repo-token:
-    description: 'GitHub token for authentication'
+  environment:
+    description: 'The environment to deploy to'
     required: true
-    default: ${{ github.token }}
+    default: 'staging'
 
 runs:
   using: 'composite'
   steps:
-    # Step 1: Checkout the repository
-    - name: 'Checkout code'
-      uses: actions/checkout@v3
+    - name: Set up environment
+      run: |
+        echo "Setting up environment: ${{ inputs.environment }}"
+    
+    - name: Install dependencies
+      run: npm install
+    
+    - name: Run tests
+      run: npm test
 
-    # Step 2: Set up CodeQL
-    - name: 'Set up CodeQL'
-      uses: github/codeql-action/setup@v2
-
-    # Step 3: Analyze the code using CodeQL
-    - name: 'Run CodeQL analysis'
-      uses: github/codeql-action/analyze@v2
-      with:
-        category: 'security'
-
-    # Step 4: Upload the analysis results (if applicable)
-    - name: 'Upload CodeQL results'
-      uses: github/codeql-action/upload-sarif@v2
-      with:
-        sarif_file: 'path/to/sarif/results.sarif'
-
-    # Step 5: Additional security scans (can include GHAS tools for secret scanning)
-    - name: 'Run secret scanning'
-      uses: github/codeql-action/secret-scan@v2
-      with:
-        secret-scan-mode: 'full'
+    - name: Deploy to environment
+      run: echo "Deploying to ${{ inputs.environment }} environment"

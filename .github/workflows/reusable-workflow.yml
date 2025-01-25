@@ -1,0 +1,29 @@
+name: Reusable Workflow with Composite Action
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: true
+        default: 'staging'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Run a composite action
+        uses: ./my-composite-action # Path to your composite action directory
+        with:
+          environment: ${{ inputs.environment }}
+          
+      - name: Complete deployment
+        run: echo "Deploying to ${{ inputs.environment }} environment"
