@@ -1,28 +1,29 @@
-name: CodeQL
-
+name: Build and test
 on:
-  push:
-    branches: 
-      - main
   pull_request:
-    branches:
-      - main
-
+    branches: [ main ]
+  push:
+    branches: [ main ]
 jobs:
-  analyze:
-    name: Analyze
+  build-and-test-project:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up CodeQL
-        uses: github/codeql-action/setup@v2
+        uses: actions/checkout@v3
         with:
-          languages: python, javascript  # Specify the languages you want to analyze
-
-      - name: Auto-build
-        uses: github/codeql-action/autobuild@v2
-
-      - name: Run CodeQL Analysis
-        uses: github/codeql-action/analyze@v2
+          fetch-depth: 0
+          fetch-tags: true
+      - name: Generate version
+        id: generate-version
+        uses: ./
+      - name: Print version information
+        if: steps.generate-version.outputs.version-string != ''
+        run: echo ${{ steps.generate-version.outputs.version-string }}
+      - name: Tag version
+        if: ${{ github.event_name == 'push' }}
+        run: |
+          echo "Tagging version: ${{ steps.generate-version.outputs.version-string }}"
+          git tag  v${{ steps.generate-version.outputs.version-string }}
+          git tag --force v1 v${{ steps.generate-version.outputs.version-string }}
+          git push origin --tags
+            
