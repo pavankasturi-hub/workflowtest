@@ -1,0 +1,28 @@
+name: CodeQL
+
+on:
+  push:
+    branches: 
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up CodeQL
+        uses: github/codeql-action/setup@v2
+        with:
+          languages: python, javascript  # Specify the languages you want to analyze
+
+      - name: Auto-build
+        uses: github/codeql-action/autobuild@v2
+
+      - name: Run CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
